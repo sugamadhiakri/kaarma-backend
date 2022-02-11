@@ -29,6 +29,16 @@ export interface NexusGenScalars {
 
 export interface NexusGenObjects {
   Mutation: {};
+  Organization: { // root type
+    address: string; // String!
+    description: string; // String!
+    email: string; // String!
+    id: number; // Int!
+    name: string; // String!
+    password: string; // String!
+    phone: string; // String!
+    username: string; // String!
+  }
   Post: { // root type
     body: string; // String!
     id: number; // Int!
@@ -51,7 +61,19 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 export interface NexusGenFieldTypes {
   Mutation: { // field return type
     createDraft: NexusGenRootTypes['Post']; // Post!
+    createOrganization: NexusGenRootTypes['Organization']; // Organization!
+    deleteOrganization: NexusGenRootTypes['Organization']; // Organization!
     publish: NexusGenRootTypes['Post']; // Post!
+  }
+  Organization: { // field return type
+    address: string; // String!
+    description: string; // String!
+    email: string; // String!
+    id: number; // Int!
+    name: string; // String!
+    password: string; // String!
+    phone: string; // String!
+    username: string; // String!
   }
   Post: { // field return type
     body: string; // String!
@@ -61,6 +83,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     drafts: NexusGenRootTypes['Post'][]; // [Post!]!
+    getAllOrganizations: NexusGenRootTypes['Organization'][]; // [Organization!]!
     posts: NexusGenRootTypes['Post'][]; // [Post!]!
   }
 }
@@ -68,7 +91,19 @@ export interface NexusGenFieldTypes {
 export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     createDraft: 'Post'
+    createOrganization: 'Organization'
+    deleteOrganization: 'Organization'
     publish: 'Post'
+  }
+  Organization: { // field return type name
+    address: 'String'
+    description: 'String'
+    email: 'String'
+    id: 'Int'
+    name: 'String'
+    password: 'String'
+    phone: 'String'
+    username: 'String'
   }
   Post: { // field return type name
     body: 'String'
@@ -78,6 +113,7 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     drafts: 'Post'
+    getAllOrganizations: 'Organization'
     posts: 'Post'
   }
 }
@@ -87,6 +123,18 @@ export interface NexusGenArgTypes {
     createDraft: { // args
       body: string; // String!
       title: string; // String!
+    }
+    createOrganization: { // args
+      address: string; // String!
+      description: string; // String!
+      email: string; // String!
+      name: string; // String!
+      password: string; // String!
+      phone: string; // String!
+      username: string; // String!
+    }
+    deleteOrganization: { // args
+      id: number; // Int!
     }
     publish: { // args
       draftId: number; // Int!
