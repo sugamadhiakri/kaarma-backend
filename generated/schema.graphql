@@ -4,7 +4,20 @@
 
 type Mutation {
   createDraft(body: String!, title: String!): Post!
+  createOrganization(address: String!, description: String!, email: String!, name: String!, password: String!, phone: String!, username: String!): Organization!
+  deleteOrganization(id: Int!): Organization!
   publish(draftId: Int!): Post!
+}
+
+type Organization {
+  address: String!
+  description: String!
+  email: String!
+  id: Int!
+  name: String!
+  password: String!
+  phone: String!
+  username: String!
 }
 
 type Post {
@@ -16,5 +29,6 @@ type Post {
 
 type Query {
   drafts: [Post!]!
+  getAllOrganizations: [Organization!]!
   posts: [Post!]!
 }
