@@ -16,3 +16,61 @@ model Post {
   body      String
   published Boolean
 }
+
+model Organization {
+  id          Int    @id @default(autoincrement())
+  name        String
+  username    String
+  password    String
+  address     String
+  description String
+  email       String @unique
+  phone       String @unique
+}
+
+model Location {
+  id        Int         @id @default(autoincrement())
+  latitude  Float
+  longitude Float
+  Volunteer Volunteer[]
+  Programme Programme[]
+}
+
+model Volunteer {
+  id                  Int                  @id @default(autoincrement())
+  fname               String
+  lname               String
+  username            String               @unique
+  email               String               @unique
+  dob                 DateTime
+  phone               String               @unique
+  bloodAvaibality     Boolean              @default(false)
+  lastBloodDonated    DateTime
+  experience          Int
+  locationId          Int?
+  location            Location?            @relation(fields: [locationId], references: [id])
+  ProgrammeApplicants ProgrammeVolunteer[]
+}
+
+model Programme {
+  id                  Int                  @id @default(autoincrement())
+  title               String
+  description         String
+  experience          Int
+  organizationId      Int
+  posted              DateTime
+  expiry              DateTime
+  execution           DateTime
+  location            Location             @relation(fields: [locationId], references: [id])
+  ProgrammeApplicants ProgrammeVolunteer[]
+  locationId          Int
+}
+
+model ProgrammeVolunteer {
+  id          Int       @id @default(autoincrement())
+  programmeId Int
+  volunteerId Int
+  selected    Boolean   @default(false)
+  programme   Programme @relation(fields: [programmeId], references: [id])
+  volunteer   Volunteer @relation(fields: [volunteerId], references: [id])
+}
