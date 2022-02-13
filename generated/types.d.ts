@@ -4,13 +4,13 @@
  */
 
 
-import type { Context } from "./../src/context"
+import type { Context } from "../src/Interface/context"
 
 
 
 
 declare global {
-  interface NexusGen extends NexusGenTypes {}
+  interface NexusGen extends NexusGenTypes { }
 }
 
 export interface NexusGenInputs {
