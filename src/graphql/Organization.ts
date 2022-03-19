@@ -75,6 +75,6 @@ export const OrganizationMutation = extendType({
 
                 return org;
             }
-        })
+        });
     }
 })

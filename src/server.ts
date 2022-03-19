@@ -1,11 +1,23 @@
 import "reflect-metadata";
-import { ApolloServer } from "apollo-server";
+import { ApolloServer, AuthenticationError } from "apollo-server";
 import { schema } from "./schema";
-import { context } from "./Interface/context";
+import { AuthService } from "./services/authService";
+import { db } from "./db";
 
 const server = new ApolloServer({
     schema,
-    context,
+    context: async ({ req }) => {
+        try {
+            const token = req.headers.authorization;
+            const auth = await AuthService.instance.getAutheticatedUser(token);
+            return {
+                db,
+                auth,
+            };
+        } catch (error: any) {
+            throw new AuthenticationError(error.message);
+        }
+    }
 });
 
 export default server;
