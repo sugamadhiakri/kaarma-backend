@@ -7,6 +7,7 @@ type Mutation {
   createOrganization(address: String!, description: String!, email: String!, name: String!, password: String!, phone: String!, username: String!): Organization!
   deleteOrganization(id: Int!): Organization!
   publish(draftId: Int!): Post!
+  submmitOrganization(address: String!, description: String!, email: String!, name: String!, phone: String!): OrganizationSubmission!
 }
 
 type Organization {
@@ -20,6 +21,16 @@ type Organization {
   username: String!
 }
 
+type OrganizationSubmission {
+  accepted: Boolean!
+  address: String!
+  description: String!
+  email: String!
+  id: Int!
+  name: String!
+  phone: String!
+}
+
 type Post {
   body: String!
   id: Int!
@@ -30,5 +41,8 @@ type Post {
 type Query {
   drafts: [Post!]!
   getAllOrganizations: [Organization!]!
+  getAllPendingSubmittedOrganizations: [OrganizationSubmission!]!
+  getAllSubmittedOrganizations: [OrganizationSubmission!]!
+  getSubmittedOrganizationById(id: Int!): OrganizationSubmission
   posts: [Post!]!
 }

@@ -29,11 +29,13 @@ model Organization {
 }
 
 model OrganizationSubmission {
-  id          Int    @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   name        String
   description String
-  email       String @unique
-  phone       String @unique
+  address     String
+  email       String  @unique
+  phone       String  @unique
+  accepted    Boolean @default(false)
 }
 
 model Location {

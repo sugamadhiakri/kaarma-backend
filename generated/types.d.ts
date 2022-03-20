@@ -4,13 +4,13 @@
  */
 
 
-import type { Context } from "../src/Interface/context"
+import type { Context } from "./../src/Interface/context"
 
 
 
 
 declare global {
-  interface NexusGen extends NexusGenTypes { }
+  interface NexusGen extends NexusGenTypes {}
 }
 
 export interface NexusGenInputs {
@@ -39,6 +39,15 @@ export interface NexusGenObjects {
     phone: string; // String!
     username: string; // String!
   }
+  OrganizationSubmission: { // root type
+    accepted: boolean; // Boolean!
+    address: string; // String!
+    description: string; // String!
+    email: string; // String!
+    id: number; // Int!
+    name: string; // String!
+    phone: string; // String!
+  }
   Post: { // root type
     body: string; // String!
     id: number; // Int!
@@ -64,6 +73,7 @@ export interface NexusGenFieldTypes {
     createOrganization: NexusGenRootTypes['Organization']; // Organization!
     deleteOrganization: NexusGenRootTypes['Organization']; // Organization!
     publish: NexusGenRootTypes['Post']; // Post!
+    submmitOrganization: NexusGenRootTypes['OrganizationSubmission']; // OrganizationSubmission!
   }
   Organization: { // field return type
     address: string; // String!
@@ -75,6 +85,15 @@ export interface NexusGenFieldTypes {
     phone: string; // String!
     username: string; // String!
   }
+  OrganizationSubmission: { // field return type
+    accepted: boolean; // Boolean!
+    address: string; // String!
+    description: string; // String!
+    email: string; // String!
+    id: number; // Int!
+    name: string; // String!
+    phone: string; // String!
+  }
   Post: { // field return type
     body: string; // String!
     id: number; // Int!
@@ -84,6 +103,9 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     drafts: NexusGenRootTypes['Post'][]; // [Post!]!
     getAllOrganizations: NexusGenRootTypes['Organization'][]; // [Organization!]!
+    getAllPendingSubmittedOrganizations: NexusGenRootTypes['OrganizationSubmission'][]; // [OrganizationSubmission!]!
+    getAllSubmittedOrganizations: NexusGenRootTypes['OrganizationSubmission'][]; // [OrganizationSubmission!]!
+    getSubmittedOrganizationById: NexusGenRootTypes['OrganizationSubmission'] | null; // OrganizationSubmission
     posts: NexusGenRootTypes['Post'][]; // [Post!]!
   }
 }
@@ -94,6 +116,7 @@ export interface NexusGenFieldTypeNames {
     createOrganization: 'Organization'
     deleteOrganization: 'Organization'
     publish: 'Post'
+    submmitOrganization: 'OrganizationSubmission'
   }
   Organization: { // field return type name
     address: 'String'
@@ -105,6 +128,15 @@ export interface NexusGenFieldTypeNames {
     phone: 'String'
     username: 'String'
   }
+  OrganizationSubmission: { // field return type name
+    accepted: 'Boolean'
+    address: 'String'
+    description: 'String'
+    email: 'String'
+    id: 'Int'
+    name: 'String'
+    phone: 'String'
+  }
   Post: { // field return type name
     body: 'String'
     id: 'Int'
@@ -114,6 +146,9 @@ export interface NexusGenFieldTypeNames {
   Query: { // field return type name
     drafts: 'Post'
     getAllOrganizations: 'Organization'
+    getAllPendingSubmittedOrganizations: 'OrganizationSubmission'
+    getAllSubmittedOrganizations: 'OrganizationSubmission'
+    getSubmittedOrganizationById: 'OrganizationSubmission'
     posts: 'Post'
   }
 }
@@ -138,6 +173,18 @@ export interface NexusGenArgTypes {
     }
     publish: { // args
       draftId: number; // Int!
+    }
+    submmitOrganization: { // args
+      address: string; // String!
+      description: string; // String!
+      email: string; // String!
+      name: string; // String!
+      phone: string; // String!
+    }
+  }
+  Query: {
+    getSubmittedOrganizationById: { // args
+      id: number; // Int!
     }
   }
 }
