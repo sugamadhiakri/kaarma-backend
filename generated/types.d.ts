@@ -28,6 +28,10 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Admin: { // root type
+    password: string; // String!
+    username: string; // String!
+  }
   Mutation: {};
   Organization: { // root type
     address: string; // String!
@@ -68,10 +72,17 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  Admin: { // field return type
+    password: string; // String!
+    username: string; // String!
+  }
   Mutation: { // field return type
+    approveOrganization: NexusGenRootTypes['OrganizationSubmission']; // OrganizationSubmission!
     createDraft: NexusGenRootTypes['Post']; // Post!
     createOrganization: NexusGenRootTypes['Organization']; // Organization!
     deleteOrganization: NexusGenRootTypes['Organization']; // Organization!
+    loginAdmin: string; // String!
+    loginOrganization: string; // String!
     publish: NexusGenRootTypes['Post']; // Post!
     submmitOrganization: NexusGenRootTypes['OrganizationSubmission']; // OrganizationSubmission!
   }
@@ -111,10 +122,17 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
+  Admin: { // field return type name
+    password: 'String'
+    username: 'String'
+  }
   Mutation: { // field return type name
+    approveOrganization: 'OrganizationSubmission'
     createDraft: 'Post'
     createOrganization: 'Organization'
     deleteOrganization: 'Organization'
+    loginAdmin: 'String'
+    loginOrganization: 'String'
     publish: 'Post'
     submmitOrganization: 'OrganizationSubmission'
   }
@@ -155,6 +173,9 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    approveOrganization: { // args
+      id: number; // Int!
+    }
     createDraft: { // args
       body: string; // String!
       title: string; // String!
@@ -170,6 +191,14 @@ export interface NexusGenArgTypes {
     }
     deleteOrganization: { // args
       id: number; // Int!
+    }
+    loginAdmin: { // args
+      password: string; // String!
+      username: string; // String!
+    }
+    loginOrganization: { // args
+      password: string; // String!
+      username: string; // String!
     }
     publish: { // args
       draftId: number; // Int!

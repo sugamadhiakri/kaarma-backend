@@ -19,15 +19,15 @@ export const OrganizationSubmissionQuery = extendType({
     definition(t) {
         t.list.field("getAllSubmittedOrganizations", {
             type: "OrganizationSubmission",
-            resolve(_root, _args, context) {
-                return context.db.organizationSubmission.findMany();
+            async resolve(_root, _args, context) {
+                return await context.db.organizationSubmission.findMany();
             }
         });
 
         t.list.field("getAllPendingSubmittedOrganizations", {
             type: "OrganizationSubmission",
-            resolve(_root, _args, context) {
-                return context.db.organizationSubmission.findMany({
+            async resolve(_root, _args, context) {
+                return await context.db.organizationSubmission.findMany({
                     where: {
                         accepted: false
                     }
@@ -40,8 +40,8 @@ export const OrganizationSubmissionQuery = extendType({
             args: {
                 id: intArg()
             },
-            resolve(_root, args, context) {
-                return context.db.organizationSubmission.findUnique({
+            async resolve(_root, args, context) {
+                return await context.db.organizationSubmission.findUnique({
                     where: {
                         id: args.id
                     }
@@ -64,7 +64,7 @@ export const OrganizationSubmissionMutation = extendType({
                 email: stringArg(),
                 phone: stringArg(),
             },
-            resolve(_root, args, context) {
+            async resolve(_root, args, context) {
                 // check if the email and phone already exists
 
                 const organizationSubmission = {
@@ -75,7 +75,7 @@ export const OrganizationSubmissionMutation = extendType({
                     phone: args.phone
                 }
 
-                const org = context.db.organizationSubmission.create({
+                const org = await context.db.organizationSubmission.create({
                     data: organizationSubmission,
                 });
 
@@ -113,12 +113,12 @@ export const OrganizationSubmissionMutation = extendType({
                     password: "demoPassword"
                 }
 
-                const orgWithId = context.db.organization.create({
+                const orgWithId = await context.db.organization.create({
                     data: org
                 });
 
                 // Update the accepted organization
-                context.db.organizationSubmission.update({
+                await context.db.organizationSubmission.update({
                     where: {
                         id: args.id
                     },

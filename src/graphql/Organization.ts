@@ -1,5 +1,5 @@
-import { extendType, intArg, nullable, objectType, stringArg } from "nexus";
-
+import { extendType, intArg, objectType, stringArg } from "nexus";
+import jwt from "jsonwebtoken";
 export const Organization = objectType({
     name: "Organization",
     definition(t) {
@@ -19,8 +19,8 @@ export const OrganizationQuery = extendType({
     definition(t) {
         t.nonNull.list.field("getAllOrganizations", {
             type: "Organization",
-            resolve(_root, _args, context) {
-                return context.db.organization.findMany();
+            async resolve(_root, _args, context) {
+                return await context.db.organization.findMany();
             },
         });
     }
@@ -29,6 +29,35 @@ export const OrganizationQuery = extendType({
 export const OrganizationMutation = extendType({
     type: "Mutation",
     definition(t) {
+        t.string("loginOrganization", {
+            args: {
+                username: stringArg(),
+                password: stringArg(),
+            },
+
+            async resolve(_root, args, context) {
+                const org = await context.db.organization.findFirst({
+                    where: {
+                        username: args.username
+                    }
+                });
+
+                const secret = process.env.JWT_SECRET;
+                if (!secret) {
+                    throw Error("Secret Not available");
+
+                }
+
+                if (org == null || org.username !== args.username && org?.password !== args.password) {
+                    throw Error("Username or Password incorrect");
+                }
+
+                const token = jwt.sign(org, secret);
+
+                return token;
+            }
+        });
+
         t.field("createOrganization", {
             type: "Organization",
             args: {
@@ -41,7 +70,7 @@ export const OrganizationMutation = extendType({
                 phone: stringArg()
             },
 
-            resolve(_root, args, context) {
+            async resolve(_root, args, context) {
 
                 const organization = {
                     name: args.name,
@@ -53,7 +82,7 @@ export const OrganizationMutation = extendType({
                     phone: args.phone,
                 }
 
-                const org = context.db.organization.create({
+                const org = await context.db.organization.create({
                     data: organization,
                 });
 
@@ -66,8 +95,8 @@ export const OrganizationMutation = extendType({
             args: {
                 id: intArg()
             },
-            resolve(_root, args, context) {
-                const org = context.db.organization.delete({
+            async resolve(_root, args, context) {
+                const org = await context.db.organization.delete({
                     where: {
                         id: args.id
                     }
