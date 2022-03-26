@@ -28,6 +28,16 @@ model Organization {
   phone       String @unique
 }
 
+model OrganizationSubmission {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String
+  address     String
+  email       String  @unique
+  phone       String  @unique
+  accepted    Boolean @default(false)
+}
+
 model Location {
   id        Int         @id @default(autoincrement())
   latitude  Float
