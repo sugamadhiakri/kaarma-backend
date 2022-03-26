@@ -39,7 +39,10 @@ export const isOrganization = rule()(
 );
 
 export const isAdmin = rule()(
-    async (args, _, __): Promise<IRuleResult> => {
-        return args.username == process.env.ADMIN_USERNAME && args.password == process.env.ADMIN_PASSWORD;
+    async (_, __, ctx: Context): Promise<IRuleResult> => {
+        const username = process.env.ADMIN_USERNAME;
+        const password = process.env.ADMIN_PASSWORD;
+
+        return ctx.auth.username == username && ctx.auth.password == password;
     }
 );
