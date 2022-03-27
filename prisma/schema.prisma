@@ -10,13 +10,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  body      String
-  published Boolean
-}
-
 model Organization {
   id          Int    @id @default(autoincrement())
   name        String

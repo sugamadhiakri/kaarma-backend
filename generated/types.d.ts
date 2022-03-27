@@ -52,12 +52,6 @@ export interface NexusGenObjects {
     name: string; // String!
     phone: string; // String!
   }
-  Post: { // root type
-    body: string; // String!
-    id: number; // Int!
-    published: boolean; // Boolean!
-    title: string; // String!
-  }
   Query: {};
 }
 
@@ -78,12 +72,10 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     approveOrganization: NexusGenRootTypes['OrganizationSubmission']; // OrganizationSubmission!
-    createDraft: NexusGenRootTypes['Post']; // Post!
     createOrganization: NexusGenRootTypes['Organization']; // Organization!
     deleteOrganization: NexusGenRootTypes['Organization']; // Organization!
     loginAdmin: string; // String!
     loginOrganization: string; // String!
-    publish: NexusGenRootTypes['Post']; // Post!
     submmitOrganization: NexusGenRootTypes['OrganizationSubmission']; // OrganizationSubmission!
   }
   Organization: { // field return type
@@ -105,19 +97,11 @@ export interface NexusGenFieldTypes {
     name: string; // String!
     phone: string; // String!
   }
-  Post: { // field return type
-    body: string; // String!
-    id: number; // Int!
-    published: boolean; // Boolean!
-    title: string; // String!
-  }
   Query: { // field return type
-    drafts: NexusGenRootTypes['Post'][]; // [Post!]!
     getAllOrganizations: NexusGenRootTypes['Organization'][]; // [Organization!]!
     getAllPendingSubmittedOrganizations: NexusGenRootTypes['OrganizationSubmission'][]; // [OrganizationSubmission!]!
     getAllSubmittedOrganizations: NexusGenRootTypes['OrganizationSubmission'][]; // [OrganizationSubmission!]!
     getSubmittedOrganizationById: NexusGenRootTypes['OrganizationSubmission'] | null; // OrganizationSubmission
-    posts: NexusGenRootTypes['Post'][]; // [Post!]!
   }
 }
 
@@ -128,12 +112,10 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     approveOrganization: 'OrganizationSubmission'
-    createDraft: 'Post'
     createOrganization: 'Organization'
     deleteOrganization: 'Organization'
     loginAdmin: 'String'
     loginOrganization: 'String'
-    publish: 'Post'
     submmitOrganization: 'OrganizationSubmission'
   }
   Organization: { // field return type name
@@ -155,19 +137,11 @@ export interface NexusGenFieldTypeNames {
     name: 'String'
     phone: 'String'
   }
-  Post: { // field return type name
-    body: 'String'
-    id: 'Int'
-    published: 'Boolean'
-    title: 'String'
-  }
   Query: { // field return type name
-    drafts: 'Post'
     getAllOrganizations: 'Organization'
     getAllPendingSubmittedOrganizations: 'OrganizationSubmission'
     getAllSubmittedOrganizations: 'OrganizationSubmission'
     getSubmittedOrganizationById: 'OrganizationSubmission'
-    posts: 'Post'
   }
 }
 
@@ -175,10 +149,6 @@ export interface NexusGenArgTypes {
   Mutation: {
     approveOrganization: { // args
       id: number; // Int!
-    }
-    createDraft: { // args
-      body: string; // String!
-      title: string; // String!
     }
     createOrganization: { // args
       address: string; // String!
@@ -199,9 +169,6 @@ export interface NexusGenArgTypes {
     loginOrganization: { // args
       password: string; // String!
       username: string; // String!
-    }
-    publish: { // args
-      draftId: number; // Int!
     }
     submmitOrganization: { // args
       address: string; // String!
