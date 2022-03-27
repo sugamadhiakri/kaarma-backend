@@ -9,12 +9,10 @@ type Admin {
 
 type Mutation {
   approveOrganization(id: Int!): OrganizationSubmission!
-  createDraft(body: String!, title: String!): Post!
   createOrganization(address: String!, description: String!, email: String!, name: String!, password: String!, phone: String!, username: String!): Organization!
   deleteOrganization(id: Int!): Organization!
   loginAdmin(password: String!, username: String!): String!
   loginOrganization(password: String!, username: String!): String!
-  publish(draftId: Int!): Post!
   submmitOrganization(address: String!, description: String!, email: String!, name: String!, phone: String!): OrganizationSubmission!
 }
 
@@ -39,18 +37,9 @@ type OrganizationSubmission {
   phone: String!
 }
 
-type Post {
-  body: String!
-  id: Int!
-  published: Boolean!
-  title: String!
-}
-
 type Query {
-  drafts: [Post!]!
   getAllOrganizations: [Organization!]!
   getAllPendingSubmittedOrganizations: [OrganizationSubmission!]!
   getAllSubmittedOrganizations: [OrganizationSubmission!]!
   getSubmittedOrganizationById(id: Int!): OrganizationSubmission
-  posts: [Post!]!
 }
