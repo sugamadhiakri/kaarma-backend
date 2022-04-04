@@ -73,7 +73,7 @@ export const OrganizationSubmissionMutation = extendType({
                     address: args.address,
                     email: args.address,
                     phone: args.phone
-                }
+                };
 
                 const org = await context.db.organizationSubmission.create({
                     data: organizationSubmission,
@@ -97,8 +97,11 @@ export const OrganizationSubmissionMutation = extendType({
                 });
 
                 if (organizationDetail === null) {
-                    console.log("Organization Detail doesn't exist");
-                    return null;
+                    throw new Error("Organization Submission doesn't exist");
+                }
+
+                if (organizationDetail.accepted) {
+                    throw new Error("Organization Already Approved");
                 }
 
                 // Create the organization according to the details.
@@ -111,24 +114,24 @@ export const OrganizationSubmissionMutation = extendType({
                     phone: organizationDetail.phone,
                     username: "dempusername",
                     password: "demoPassword"
-                }
+                };
 
                 const orgWithId = await context.db.organization.create({
                     data: org
                 });
 
                 // Update the accepted organization
-                await context.db.organizationSubmission.update({
+                const approvedOrg = await context.db.organizationSubmission.update({
                     where: {
                         id: args.id
                     },
                     data: {
                         accepted: true
                     }
-                })
+                });
 
-                return orgWithId;
+                return approvedOrg;
             }
         });
     }
-})
+});
