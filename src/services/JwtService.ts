@@ -1,4 +1,5 @@
-import jwt, { JsonWebTokenError } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
+import * as passwordGenerator from "secure-random-password";
 
 export class JwtService {
 
@@ -27,5 +28,16 @@ export class JwtService {
         });
 
         return decodedUser;
+    }
+
+    public generateRandomPassword() {
+        return passwordGenerator.randomPassword({ length: 8 });
+    }
+
+    public generateUsernameFromEmail(email: string) {
+        const usernamePrefix = email.split("@");
+        const username = usernamePrefix[0] + passwordGenerator.randomPassword({ length: 3, characters: passwordGenerator.digits });
+
+        return username;
     }
 }
