@@ -1,4 +1,6 @@
+import { OrganizationSubmission as OrganizationSubmissionType } from "@prisma/client";
 import { extendType, objectType, intArg, stringArg, booleanArg } from "nexus";
+import { MailingService } from "../services/mailingService";
 import { JwtService } from "../services/JwtService";
 
 export const OrganizationSubmission = objectType({
@@ -127,7 +129,7 @@ export const OrganizationSubmissionMutation = extendType({
                 });
 
                 // Update the accepted organization
-                const approvedOrg = await context.db.organizationSubmission.update({
+                const approvedOrg: OrganizationSubmissionType = await context.db.organizationSubmission.update({
                     where: {
                         id: args.id
                     },
@@ -135,6 +137,16 @@ export const OrganizationSubmissionMutation = extendType({
                         accepted: true
                     }
                 });
+
+                // Mail the credentials to the approved organization
+                const message = `
+                    Your organization has been approved. Now you can
+                    Login via these credentials:
+
+                    username: ${username}
+                    password: ${password}
+                `;
+                await MailingService.instance.sendMail(approvedOrg.email, "Your Organization was approved", message);
 
                 return approvedOrg;
             }

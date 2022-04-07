@@ -1,5 +1,6 @@
 import { AuthenticatedUser } from "src/Interface/auth";
 import { JwtService } from "./JwtService";
+import { MailingService } from "./mailingService";
 
 export class AuthService {
     private static _instance: AuthService;
@@ -13,6 +14,7 @@ export class AuthService {
         if (AuthService._instance == null) {
             AuthService._instance = new AuthService();
         }
+
         return AuthService._instance;
     }
 
