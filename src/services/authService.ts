@@ -1,12 +1,12 @@
-import jwt from "jsonwebtoken";
-import { applyNexusWrapping } from "nexus/dist/core";
 import { AuthenticatedUser } from "src/Interface/auth";
+import { JwtService } from "./JwtService";
 
 export class AuthService {
     private static _instance: AuthService;
+    private jwtService: JwtService;
 
     private constructor() {
-
+        this.jwtService = JwtService.instance;
     }
 
     public static get instance(): AuthService {
@@ -26,26 +26,16 @@ export class AuthService {
         //     }
         // }
 
-        const secret = process.env.JWT_SECRET || '';
         if (token == undefined) return null;
 
-        let decodedUser: any;
-
-        jwt.verify(token, secret, function (err: any, decoded) {
-            if (err) {
-                throw new Error(err.name + "\n" + err.message);
-            }
-
-            decodedUser = decoded;
-
-        });
+        let decodedUser: any = this.jwtService.verifyOrganization(token);
 
         const authenticatedUser: AuthenticatedUser = {
             userId: decodedUser?.userId,
             username: decodedUser?.username,
             password: decodedUser?.password
 
-        }
+        };
         return authenticatedUser;
 
     }

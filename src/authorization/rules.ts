@@ -28,13 +28,13 @@ export const isOrganization = rule()(
     async (_, __, ctx: Context): Promise<IRuleResult> => {
         const userId = ctx.auth.userId;
 
-        const user = await ctx.db.organization.findUnique({
+        const org = await ctx.db.organization.findUnique({
             where: {
                 id: userId
             }
         });
 
-        return !!user;
+        return !!org && org.username == ctx.auth.username && org.password == ctx.auth.password;
     }
 );
 
