@@ -1,10 +1,9 @@
-The backend service for Alphie
+The backend service for Kaarma. 
 
 Tech stack:
 - apollo-server
 - GraphQL Nexus
 - Prisma
-
 
 ### Development
 
@@ -18,7 +17,3 @@ OR
 ```
 docker-compose up --build
 ```
-
-### Production
-
-Workflow not figured out yet!
