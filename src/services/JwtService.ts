@@ -11,7 +11,7 @@ export class JwtService {
     }
 
     public static get instance(): JwtService {
-        if (JwtService._instance === null)
+        if (JwtService._instance == null)
             JwtService._instance = new JwtService();
 
         return JwtService._instance;
@@ -31,7 +31,7 @@ export class JwtService {
     }
 
     public generateRandomPassword() {
-        return passwordGenerator.randomPassword({ length: 8 });
+        return passwordGenerator.randomPassword({ length: 12 });
     }
 
     public generateUsernameFromEmail(email: string) {

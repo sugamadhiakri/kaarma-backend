@@ -1,6 +1,5 @@
-import { prisma } from "@prisma/client";
 import { extendType, objectType, intArg, stringArg, booleanArg } from "nexus";
-import { JwtService } from "src/services/JwtService";
+import { JwtService } from "../services/JwtService";
 
 export const OrganizationSubmission = objectType({
     name: "OrganizationSubmission",
