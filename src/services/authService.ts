@@ -1,3 +1,4 @@
+import { addResolveFunctionsToSchema } from "apollo-server";
 import { AuthenticatedUser } from "src/Interface/auth";
 import { JwtService } from "./JwtService";
 import { MailingService } from "./mailingService";
@@ -27,6 +28,8 @@ export class AuthService {
         //         authprovider: "test-auth"
         //     }
         // }
+
+
 
         if (token == undefined) return null;
 

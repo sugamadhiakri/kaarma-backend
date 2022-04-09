@@ -7,6 +7,17 @@ type Admin {
   username: String!
 }
 
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+type Location {
+  id: Int!
+  latitude: Float!
+  longitude: Float!
+}
+
 type Mutation {
   approveOrganization(id: Int!): OrganizationSubmission!
   createOrganization(address: String!, description: String!, email: String!, name: String!, password: String!, phone: String!, username: String!): Organization!
@@ -37,9 +48,40 @@ type OrganizationSubmission {
   phone: String!
 }
 
+type Programme {
+  applicants: [Volunteer!]!
+  description: String!
+  execution: DateTime!
+  experience: Int!
+  expiry: DateTime!
+  id: Int!
+  location: Location
+  locationId: Int!
+  organization: Organization!
+  organizationId: Int!
+  posted: DateTime!
+  title: String!
+  volunteersRequired: Int!
+}
+
 type Query {
   getAllOrganizations: [Organization!]!
   getAllPendingSubmittedOrganizations: [OrganizationSubmission!]!
   getAllSubmittedOrganizations: [OrganizationSubmission!]!
   getSubmittedOrganizationById(id: Int!): OrganizationSubmission
+}
+
+type Volunteer {
+  bloodAvaibality: Boolean!
+  dob: DateTime!
+  email: String!
+  experience: Int!
+  fname: String!
+  id: Int!
+  lastBloodDonated: DateTime
+  lname: String!
+  location: Location
+  locationId: Int
+  phone: String!
+  username: String!
 }
