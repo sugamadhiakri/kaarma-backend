@@ -31,7 +31,7 @@ export class AuthService {
 
 
 
-        if (token == undefined) return null;
+        if (token == undefined || token == "null") return null;
 
         let decodedUser: any = this.jwtService.verifyOrganization(token);
 
