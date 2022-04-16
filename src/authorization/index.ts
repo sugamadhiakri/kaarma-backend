@@ -8,7 +8,8 @@ export const permissions = shield({
         getAllPendingSubmittedOrganizations: isAdmin,
         getSubmittedOrganizationById: isAdmin,
         getAllOrganizations: isAdmin,
-
+        getProgrammeById: allow,
+        getAllProgrammes: allow,
     },
     Mutation: {
         "*": deny,
@@ -17,6 +18,7 @@ export const permissions = shield({
         submmitOrganization: allow,
         approveOrganization: isAdmin,
         createOrganization: isAdmin,
-        deleteOrganization: isAdmin
+        deleteOrganization: isAdmin,
+        createProgramme: allow
     }
-})
+});

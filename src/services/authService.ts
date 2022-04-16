@@ -36,7 +36,7 @@ export class AuthService {
         let decodedUser: any = this.jwtService.verifyOrganization(token);
 
         const authenticatedUser: AuthenticatedUser = {
-            userId: decodedUser?.userId,
+            userId: decodedUser?.id,
             username: decodedUser?.username,
             password: decodedUser?.password
 

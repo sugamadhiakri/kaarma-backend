@@ -124,6 +124,7 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     approveOrganization: NexusGenRootTypes['OrganizationSubmission']; // OrganizationSubmission!
     createOrganization: NexusGenRootTypes['Organization']; // Organization!
+    createProgramme: NexusGenRootTypes['Programme']; // Programme!
     deleteOrganization: NexusGenRootTypes['Organization']; // Organization!
     loginAdmin: string; // String!
     loginOrganization: string; // String!
@@ -166,7 +167,9 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     getAllOrganizations: NexusGenRootTypes['Organization'][]; // [Organization!]!
     getAllPendingSubmittedOrganizations: NexusGenRootTypes['OrganizationSubmission'][]; // [OrganizationSubmission!]!
+    getAllProgrammes: NexusGenRootTypes['Programme'][]; // [Programme!]!
     getAllSubmittedOrganizations: NexusGenRootTypes['OrganizationSubmission'][]; // [OrganizationSubmission!]!
+    getProgrammeById: NexusGenRootTypes['Programme']; // Programme!
     getSubmittedOrganizationById: NexusGenRootTypes['OrganizationSubmission'] | null; // OrganizationSubmission
   }
   Volunteer: { // field return type
@@ -198,6 +201,7 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     approveOrganization: 'OrganizationSubmission'
     createOrganization: 'Organization'
+    createProgramme: 'Programme'
     deleteOrganization: 'Organization'
     loginAdmin: 'String'
     loginOrganization: 'String'
@@ -240,7 +244,9 @@ export interface NexusGenFieldTypeNames {
   Query: { // field return type name
     getAllOrganizations: 'Organization'
     getAllPendingSubmittedOrganizations: 'OrganizationSubmission'
+    getAllProgrammes: 'Programme'
     getAllSubmittedOrganizations: 'OrganizationSubmission'
+    getProgrammeById: 'Programme'
     getSubmittedOrganizationById: 'OrganizationSubmission'
   }
   Volunteer: { // field return type name
@@ -273,6 +279,16 @@ export interface NexusGenArgTypes {
       phone: string; // String!
       username: string; // String!
     }
+    createProgramme: { // args
+      description: string; // String!
+      execution: string; // String!
+      experience: number; // Int!
+      expiry: string; // String!
+      latitude: number; // Float!
+      longitude: number; // Float!
+      title: string; // String!
+      volunteersRequired: number; // Int!
+    }
     deleteOrganization: { // args
       id: number; // Int!
     }
@@ -293,6 +309,9 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    getProgrammeById: { // args
+      id: number; // Int!
+    }
     getSubmittedOrganizationById: { // args
       id: number; // Int!
     }

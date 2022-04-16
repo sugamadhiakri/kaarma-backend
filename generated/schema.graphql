@@ -21,6 +21,7 @@ type Location {
 type Mutation {
   approveOrganization(id: Int!): OrganizationSubmission!
   createOrganization(address: String!, description: String!, email: String!, name: String!, password: String!, phone: String!, username: String!): Organization!
+  createProgramme(description: String!, execution: String!, experience: Int!, expiry: String!, latitude: Float!, longitude: Float!, title: String!, volunteersRequired: Int!): Programme!
   deleteOrganization(id: Int!): Organization!
   loginAdmin(password: String!, username: String!): String!
   loginOrganization(password: String!, username: String!): String!
@@ -67,7 +68,9 @@ type Programme {
 type Query {
   getAllOrganizations: [Organization!]!
   getAllPendingSubmittedOrganizations: [OrganizationSubmission!]!
+  getAllProgrammes: [Programme!]!
   getAllSubmittedOrganizations: [OrganizationSubmission!]!
+  getProgrammeById(id: Int!): Programme!
   getSubmittedOrganizationById(id: Int!): OrganizationSubmission
 }
 
