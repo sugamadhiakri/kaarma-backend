@@ -24,7 +24,7 @@ export const OrganizationQuery = extendType({
             },
         });
     }
-})
+});
 
 export const OrganizationMutation = extendType({
     type: "Mutation",
@@ -80,7 +80,7 @@ export const OrganizationMutation = extendType({
                     description: args.description,
                     email: args.email,
                     phone: args.phone,
-                }
+                };
 
                 const org = await context.db.organization.create({
                     data: organization,
@@ -106,4 +106,4 @@ export const OrganizationMutation = extendType({
             }
         });
     }
-})
+});

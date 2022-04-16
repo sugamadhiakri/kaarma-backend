@@ -1,3 +1,4 @@
+import { addResolveFunctionsToSchema } from "apollo-server";
 import { AuthenticatedUser } from "src/Interface/auth";
 import { JwtService } from "./JwtService";
 import { MailingService } from "./mailingService";
@@ -28,12 +29,14 @@ export class AuthService {
         //     }
         // }
 
-        if (token == undefined) return null;
+
+
+        if (token == undefined || token == "null") return null;
 
         let decodedUser: any = this.jwtService.verifyOrganization(token);
 
         const authenticatedUser: AuthenticatedUser = {
-            userId: decodedUser?.userId,
+            userId: decodedUser?.id,
             username: decodedUser?.username,
             password: decodedUser?.password
 

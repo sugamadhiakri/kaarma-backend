@@ -5,8 +5,23 @@
 
 
 import type { Context } from "./../src/Interface/context"
-
-
+import type { core } from "nexus"
+declare global {
+  interface NexusGenCustomInputMethods<TypeName extends string> {
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    date<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "DateTime";
+  }
+}
+declare global {
+  interface NexusGenCustomOutputMethods<TypeName extends string> {
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    date<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "DateTime";
+  }
+}
 
 
 declare global {
@@ -25,12 +40,18 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
+  DateTime: any
 }
 
 export interface NexusGenObjects {
   Admin: { // root type
     password: string; // String!
     username: string; // String!
+  }
+  Location: { // root type
+    id: number; // Int!
+    latitude: number; // Float!
+    longitude: number; // Float!
   }
   Mutation: {};
   Organization: { // root type
@@ -52,7 +73,32 @@ export interface NexusGenObjects {
     name: string; // String!
     phone: string; // String!
   }
+  Programme: { // root type
+    description: string; // String!
+    execution: NexusGenScalars['DateTime']; // DateTime!
+    experience: number; // Int!
+    expiry: NexusGenScalars['DateTime']; // DateTime!
+    id: number; // Int!
+    locationId: number; // Int!
+    organizationId: number; // Int!
+    posted: NexusGenScalars['DateTime']; // DateTime!
+    title: string; // String!
+    volunteersRequired: number; // Int!
+  }
   Query: {};
+  Volunteer: { // root type
+    bloodAvaibality: boolean; // Boolean!
+    dob: NexusGenScalars['DateTime']; // DateTime!
+    email: string; // String!
+    experience: number; // Int!
+    fname: string; // String!
+    id: number; // Int!
+    lastBloodDonated?: NexusGenScalars['DateTime'] | null; // DateTime
+    lname: string; // String!
+    locationId?: number | null; // Int
+    phone: string; // String!
+    username: string; // String!
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -70,9 +116,15 @@ export interface NexusGenFieldTypes {
     password: string; // String!
     username: string; // String!
   }
+  Location: { // field return type
+    id: number; // Int!
+    latitude: number; // Float!
+    longitude: number; // Float!
+  }
   Mutation: { // field return type
     approveOrganization: NexusGenRootTypes['OrganizationSubmission']; // OrganizationSubmission!
     createOrganization: NexusGenRootTypes['Organization']; // Organization!
+    createProgramme: NexusGenRootTypes['Programme']; // Programme!
     deleteOrganization: NexusGenRootTypes['Organization']; // Organization!
     loginAdmin: string; // String!
     loginOrganization: string; // String!
@@ -97,11 +149,42 @@ export interface NexusGenFieldTypes {
     name: string; // String!
     phone: string; // String!
   }
+  Programme: { // field return type
+    applicants: NexusGenRootTypes['Volunteer'][]; // [Volunteer!]!
+    description: string; // String!
+    execution: NexusGenScalars['DateTime']; // DateTime!
+    experience: number; // Int!
+    expiry: NexusGenScalars['DateTime']; // DateTime!
+    id: number; // Int!
+    location: NexusGenRootTypes['Location'] | null; // Location
+    locationId: number; // Int!
+    organization: NexusGenRootTypes['Organization']; // Organization!
+    organizationId: number; // Int!
+    posted: NexusGenScalars['DateTime']; // DateTime!
+    title: string; // String!
+    volunteersRequired: number; // Int!
+  }
   Query: { // field return type
     getAllOrganizations: NexusGenRootTypes['Organization'][]; // [Organization!]!
     getAllPendingSubmittedOrganizations: NexusGenRootTypes['OrganizationSubmission'][]; // [OrganizationSubmission!]!
+    getAllProgrammes: NexusGenRootTypes['Programme'][]; // [Programme!]!
     getAllSubmittedOrganizations: NexusGenRootTypes['OrganizationSubmission'][]; // [OrganizationSubmission!]!
+    getProgrammeById: NexusGenRootTypes['Programme']; // Programme!
     getSubmittedOrganizationById: NexusGenRootTypes['OrganizationSubmission'] | null; // OrganizationSubmission
+  }
+  Volunteer: { // field return type
+    bloodAvaibality: boolean; // Boolean!
+    dob: NexusGenScalars['DateTime']; // DateTime!
+    email: string; // String!
+    experience: number; // Int!
+    fname: string; // String!
+    id: number; // Int!
+    lastBloodDonated: NexusGenScalars['DateTime'] | null; // DateTime
+    lname: string; // String!
+    location: NexusGenRootTypes['Location'] | null; // Location
+    locationId: number | null; // Int
+    phone: string; // String!
+    username: string; // String!
   }
 }
 
@@ -110,9 +193,15 @@ export interface NexusGenFieldTypeNames {
     password: 'String'
     username: 'String'
   }
+  Location: { // field return type name
+    id: 'Int'
+    latitude: 'Float'
+    longitude: 'Float'
+  }
   Mutation: { // field return type name
     approveOrganization: 'OrganizationSubmission'
     createOrganization: 'Organization'
+    createProgramme: 'Programme'
     deleteOrganization: 'Organization'
     loginAdmin: 'String'
     loginOrganization: 'String'
@@ -137,11 +226,42 @@ export interface NexusGenFieldTypeNames {
     name: 'String'
     phone: 'String'
   }
+  Programme: { // field return type name
+    applicants: 'Volunteer'
+    description: 'String'
+    execution: 'DateTime'
+    experience: 'Int'
+    expiry: 'DateTime'
+    id: 'Int'
+    location: 'Location'
+    locationId: 'Int'
+    organization: 'Organization'
+    organizationId: 'Int'
+    posted: 'DateTime'
+    title: 'String'
+    volunteersRequired: 'Int'
+  }
   Query: { // field return type name
     getAllOrganizations: 'Organization'
     getAllPendingSubmittedOrganizations: 'OrganizationSubmission'
+    getAllProgrammes: 'Programme'
     getAllSubmittedOrganizations: 'OrganizationSubmission'
+    getProgrammeById: 'Programme'
     getSubmittedOrganizationById: 'OrganizationSubmission'
+  }
+  Volunteer: { // field return type name
+    bloodAvaibality: 'Boolean'
+    dob: 'DateTime'
+    email: 'String'
+    experience: 'Int'
+    fname: 'String'
+    id: 'Int'
+    lastBloodDonated: 'DateTime'
+    lname: 'String'
+    location: 'Location'
+    locationId: 'Int'
+    phone: 'String'
+    username: 'String'
   }
 }
 
@@ -158,6 +278,16 @@ export interface NexusGenArgTypes {
       password: string; // String!
       phone: string; // String!
       username: string; // String!
+    }
+    createProgramme: { // args
+      description: string; // String!
+      execution: string; // String!
+      experience: number; // Int!
+      expiry: string; // String!
+      latitude: number; // Float!
+      longitude: number; // Float!
+      title: string; // String!
+      volunteersRequired: number; // Int!
     }
     deleteOrganization: { // args
       id: number; // Int!
@@ -179,6 +309,9 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    getProgrammeById: { // args
+      id: number; // Int!
+    }
     getSubmittedOrganizationById: { // args
       id: number; // Int!
     }
