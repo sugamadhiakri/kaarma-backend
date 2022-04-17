@@ -32,6 +32,7 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
+  UserRole: "ADMIN" | "ORGANIZATION" | "VOLUNTEER"
 }
 
 export interface NexusGenScalars {
@@ -86,6 +87,11 @@ export interface NexusGenObjects {
     volunteersRequired: number; // Int!
   }
   Query: {};
+  User: { // root type
+    id?: number | null; // Int
+    role: NexusGenEnums['UserRole']; // UserRole!
+    username: string; // String!
+  }
   Volunteer: { // root type
     bloodAvaibality: boolean; // Boolean!
     dob: NexusGenScalars['DateTime']; // DateTime!
@@ -109,7 +115,7 @@ export interface NexusGenUnions {
 
 export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
   Admin: { // field return type
@@ -171,6 +177,12 @@ export interface NexusGenFieldTypes {
     getAllSubmittedOrganizations: NexusGenRootTypes['OrganizationSubmission'][]; // [OrganizationSubmission!]!
     getProgrammeById: NexusGenRootTypes['Programme']; // Programme!
     getSubmittedOrganizationById: NexusGenRootTypes['OrganizationSubmission'] | null; // OrganizationSubmission
+    me: NexusGenRootTypes['User']; // User!
+  }
+  User: { // field return type
+    id: number | null; // Int
+    role: NexusGenEnums['UserRole']; // UserRole!
+    username: string; // String!
   }
   Volunteer: { // field return type
     bloodAvaibality: boolean; // Boolean!
@@ -248,6 +260,12 @@ export interface NexusGenFieldTypeNames {
     getAllSubmittedOrganizations: 'OrganizationSubmission'
     getProgrammeById: 'Programme'
     getSubmittedOrganizationById: 'OrganizationSubmission'
+    me: 'User'
+  }
+  User: { // field return type name
+    id: 'Int'
+    role: 'UserRole'
+    username: 'String'
   }
   Volunteer: { // field return type name
     bloodAvaibality: 'Boolean'
@@ -328,7 +346,7 @@ export type NexusGenObjectNames = keyof NexusGenObjects;
 
 export type NexusGenInputNames = never;
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = keyof NexusGenEnums;
 
 export type NexusGenInterfaceNames = never;
 

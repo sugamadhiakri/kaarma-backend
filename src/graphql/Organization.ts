@@ -52,7 +52,7 @@ export const OrganizationMutation = extendType({
                     throw Error("Username or Password incorrect");
                 }
 
-                const token = jwt.sign(org, secret);
+                const token = jwt.sign({ ...org, role: "ORGANIZATION" }, secret);
 
                 return token;
             }

@@ -72,6 +72,19 @@ type Query {
   getAllSubmittedOrganizations: [OrganizationSubmission!]!
   getProgrammeById(id: Int!): Programme!
   getSubmittedOrganizationById(id: Int!): OrganizationSubmission
+  me: User!
+}
+
+type User {
+  id: Int
+  role: UserRole!
+  username: String!
+}
+
+enum UserRole {
+  ADMIN
+  ORGANIZATION
+  VOLUNTEER
 }
 
 type Volunteer {

@@ -5,8 +5,8 @@ import { Context } from "../Interface/context";
 
 export const isAuthenticated = rule()(
     async (_, __, ctx: Context): Promise<IRuleResult> => {
-        const userId = ctx.auth.userId;
-        return !!userId;
+        const username = ctx.auth.username;
+        return !!username;
     }
 );
 

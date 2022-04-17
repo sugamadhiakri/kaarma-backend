@@ -1,5 +1,5 @@
 import { allow, deny, or, shield } from "graphql-shield";
-import { isAdmin, isOrganization } from "./rules";
+import { isAdmin, isAuthenticated, isOrganization } from "./rules";
 
 export const permissions = shield({
     Query: {
@@ -10,6 +10,7 @@ export const permissions = shield({
         getAllOrganizations: isAdmin,
         getProgrammeById: allow,
         getAllProgrammes: allow,
+        me: isAuthenticated
     },
     Mutation: {
         "*": deny,
