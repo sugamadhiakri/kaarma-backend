@@ -8,4 +8,4 @@ src/generated/prisma/*
 dist/
 .vscode/
 .idea/
-serviceAccountKey.json
+config/gckeys.json
