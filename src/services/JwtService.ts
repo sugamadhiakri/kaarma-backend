@@ -1,5 +1,7 @@
+import { OAuth2Client } from "google-auth-library";
 import jwt from "jsonwebtoken";
 import * as passwordGenerator from "secure-random-password";
+import { db } from "../db";
 
 export class JwtService {
 
@@ -27,6 +29,39 @@ export class JwtService {
             decodedUser = decoded;
         });
 
+        return decodedUser;
+    }
+
+    public async verifyGoogleUser(token: string) {
+        let decodedUser: any;
+        const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+        async function verify() {
+            const ticket = await client.verifyIdToken({
+                idToken: token,
+                audience: process.env.GOOGLE_CLIENT_ID
+            });
+            const payload = ticket.getPayload();
+
+            if (!payload) throw new Error("Invalid Google Auth token");
+
+            const user = await db.volunteer.findFirst({
+                where: {
+                    email: payload?.email
+                }
+            });
+
+            if (!user) throw new Error("The volunteer is not setup yet");
+
+            decodedUser = {
+                id: user.id,
+                username: user.username,
+                role: "VOLUNTEER"
+            };
+
+        }
+        verify().catch(
+            console.error
+        );
         return decodedUser;
     }
 

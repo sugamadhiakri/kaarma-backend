@@ -1,9 +1,9 @@
-import { objectType } from "nexus";
+import { extendType, intArg, objectType, stringArg } from "nexus";
 
 export const Volunteer = objectType({
     name: "Volunteer",
     definition(t) {
-        t.int("id");
+        t.string("id");
         t.string("fname");
         t.string("lname");
         t.string("username");
@@ -13,7 +13,7 @@ export const Volunteer = objectType({
         t.boolean("bloodAvaibality");
         t.nullable.date("lastBloodDonated");
         t.int("experience");
-        t.nullable.int("locationId");
+        t.nullable.string("locationId");
         t.nullable.field("location", {
             type: "Location",
             async resolve(root, _args, ctx) {
@@ -24,6 +24,29 @@ export const Volunteer = objectType({
                 }) : null;
 
                 return location;
+            }
+        });
+    }
+});
+
+export const VolunteerQuery = extendType({
+    type: "Query",
+    definition(t) {
+        t.field("getVolunteerById", {
+            type: "Volunteer",
+            args: {
+                id: stringArg()
+            },
+            async resolve(_root, args, ctx) {
+                const volunteer = ctx.db.volunteer.findUnique({
+                    where: {
+                        id: args.id
+                    }
+                });
+
+                if (!volunteer) throw new Error("Volunteer doesn't exist");
+
+                return volunteer;
             }
         });
     }

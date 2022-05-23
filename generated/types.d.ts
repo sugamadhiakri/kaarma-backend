@@ -32,6 +32,7 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
+  UserRole: "ADMIN" | "ORGANIZATION" | "VOLUNTEER"
 }
 
 export interface NexusGenScalars {
@@ -49,7 +50,7 @@ export interface NexusGenObjects {
     username: string; // String!
   }
   Location: { // root type
-    id: number; // Int!
+    id: string; // String!
     latitude: number; // Float!
     longitude: number; // Float!
   }
@@ -58,7 +59,7 @@ export interface NexusGenObjects {
     address: string; // String!
     description: string; // String!
     email: string; // String!
-    id: number; // Int!
+    id: string; // String!
     name: string; // String!
     password: string; // String!
     phone: string; // String!
@@ -69,7 +70,7 @@ export interface NexusGenObjects {
     address: string; // String!
     description: string; // String!
     email: string; // String!
-    id: number; // Int!
+    id: string; // String!
     name: string; // String!
     phone: string; // String!
   }
@@ -78,24 +79,29 @@ export interface NexusGenObjects {
     execution: NexusGenScalars['DateTime']; // DateTime!
     experience: number; // Int!
     expiry: NexusGenScalars['DateTime']; // DateTime!
-    id: number; // Int!
-    locationId: number; // Int!
-    organizationId: number; // Int!
+    id: string; // String!
+    locationId: string; // String!
+    organizationId: string; // String!
     posted: NexusGenScalars['DateTime']; // DateTime!
     title: string; // String!
     volunteersRequired: number; // Int!
   }
   Query: {};
+  User: { // root type
+    id?: string | null; // String
+    role: NexusGenEnums['UserRole']; // UserRole!
+    username: string; // String!
+  }
   Volunteer: { // root type
     bloodAvaibality: boolean; // Boolean!
     dob: NexusGenScalars['DateTime']; // DateTime!
     email: string; // String!
     experience: number; // Int!
     fname: string; // String!
-    id: number; // Int!
+    id: string; // String!
     lastBloodDonated?: NexusGenScalars['DateTime'] | null; // DateTime
     lname: string; // String!
-    locationId?: number | null; // Int
+    locationId?: string | null; // String
     phone: string; // String!
     username: string; // String!
   }
@@ -109,7 +115,7 @@ export interface NexusGenUnions {
 
 export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
   Admin: { // field return type
@@ -117,7 +123,7 @@ export interface NexusGenFieldTypes {
     username: string; // String!
   }
   Location: { // field return type
-    id: number; // Int!
+    id: string; // String!
     latitude: number; // Float!
     longitude: number; // Float!
   }
@@ -134,7 +140,7 @@ export interface NexusGenFieldTypes {
     address: string; // String!
     description: string; // String!
     email: string; // String!
-    id: number; // Int!
+    id: string; // String!
     name: string; // String!
     password: string; // String!
     phone: string; // String!
@@ -145,7 +151,7 @@ export interface NexusGenFieldTypes {
     address: string; // String!
     description: string; // String!
     email: string; // String!
-    id: number; // Int!
+    id: string; // String!
     name: string; // String!
     phone: string; // String!
   }
@@ -155,11 +161,11 @@ export interface NexusGenFieldTypes {
     execution: NexusGenScalars['DateTime']; // DateTime!
     experience: number; // Int!
     expiry: NexusGenScalars['DateTime']; // DateTime!
-    id: number; // Int!
+    id: string; // String!
     location: NexusGenRootTypes['Location'] | null; // Location
-    locationId: number; // Int!
+    locationId: string; // String!
     organization: NexusGenRootTypes['Organization']; // Organization!
-    organizationId: number; // Int!
+    organizationId: string; // String!
     posted: NexusGenScalars['DateTime']; // DateTime!
     title: string; // String!
     volunteersRequired: number; // Int!
@@ -171,6 +177,13 @@ export interface NexusGenFieldTypes {
     getAllSubmittedOrganizations: NexusGenRootTypes['OrganizationSubmission'][]; // [OrganizationSubmission!]!
     getProgrammeById: NexusGenRootTypes['Programme']; // Programme!
     getSubmittedOrganizationById: NexusGenRootTypes['OrganizationSubmission'] | null; // OrganizationSubmission
+    getVolunteerById: NexusGenRootTypes['Volunteer']; // Volunteer!
+    me: NexusGenRootTypes['User']; // User!
+  }
+  User: { // field return type
+    id: string | null; // String
+    role: NexusGenEnums['UserRole']; // UserRole!
+    username: string; // String!
   }
   Volunteer: { // field return type
     bloodAvaibality: boolean; // Boolean!
@@ -178,11 +191,11 @@ export interface NexusGenFieldTypes {
     email: string; // String!
     experience: number; // Int!
     fname: string; // String!
-    id: number; // Int!
+    id: string; // String!
     lastBloodDonated: NexusGenScalars['DateTime'] | null; // DateTime
     lname: string; // String!
     location: NexusGenRootTypes['Location'] | null; // Location
-    locationId: number | null; // Int
+    locationId: string | null; // String
     phone: string; // String!
     username: string; // String!
   }
@@ -194,7 +207,7 @@ export interface NexusGenFieldTypeNames {
     username: 'String'
   }
   Location: { // field return type name
-    id: 'Int'
+    id: 'String'
     latitude: 'Float'
     longitude: 'Float'
   }
@@ -211,7 +224,7 @@ export interface NexusGenFieldTypeNames {
     address: 'String'
     description: 'String'
     email: 'String'
-    id: 'Int'
+    id: 'String'
     name: 'String'
     password: 'String'
     phone: 'String'
@@ -222,7 +235,7 @@ export interface NexusGenFieldTypeNames {
     address: 'String'
     description: 'String'
     email: 'String'
-    id: 'Int'
+    id: 'String'
     name: 'String'
     phone: 'String'
   }
@@ -232,11 +245,11 @@ export interface NexusGenFieldTypeNames {
     execution: 'DateTime'
     experience: 'Int'
     expiry: 'DateTime'
-    id: 'Int'
+    id: 'String'
     location: 'Location'
-    locationId: 'Int'
+    locationId: 'String'
     organization: 'Organization'
-    organizationId: 'Int'
+    organizationId: 'String'
     posted: 'DateTime'
     title: 'String'
     volunteersRequired: 'Int'
@@ -248,6 +261,13 @@ export interface NexusGenFieldTypeNames {
     getAllSubmittedOrganizations: 'OrganizationSubmission'
     getProgrammeById: 'Programme'
     getSubmittedOrganizationById: 'OrganizationSubmission'
+    getVolunteerById: 'Volunteer'
+    me: 'User'
+  }
+  User: { // field return type name
+    id: 'String'
+    role: 'UserRole'
+    username: 'String'
   }
   Volunteer: { // field return type name
     bloodAvaibality: 'Boolean'
@@ -255,11 +275,11 @@ export interface NexusGenFieldTypeNames {
     email: 'String'
     experience: 'Int'
     fname: 'String'
-    id: 'Int'
+    id: 'String'
     lastBloodDonated: 'DateTime'
     lname: 'String'
     location: 'Location'
-    locationId: 'Int'
+    locationId: 'String'
     phone: 'String'
     username: 'String'
   }
@@ -268,7 +288,7 @@ export interface NexusGenFieldTypeNames {
 export interface NexusGenArgTypes {
   Mutation: {
     approveOrganization: { // args
-      id: number; // Int!
+      id: string; // String!
     }
     createOrganization: { // args
       address: string; // String!
@@ -290,7 +310,7 @@ export interface NexusGenArgTypes {
       volunteersRequired: number; // Int!
     }
     deleteOrganization: { // args
-      id: number; // Int!
+      id: string; // String!
     }
     loginAdmin: { // args
       password: string; // String!
@@ -310,10 +330,13 @@ export interface NexusGenArgTypes {
   }
   Query: {
     getProgrammeById: { // args
-      id: number; // Int!
+      id: string; // String!
     }
     getSubmittedOrganizationById: { // args
-      id: number; // Int!
+      id: string; // String!
+    }
+    getVolunteerById: { // args
+      id: string; // String!
     }
   }
 }
@@ -328,7 +351,7 @@ export type NexusGenObjectNames = keyof NexusGenObjects;
 
 export type NexusGenInputNames = never;
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = keyof NexusGenEnums;
 
 export type NexusGenInterfaceNames = never;
 

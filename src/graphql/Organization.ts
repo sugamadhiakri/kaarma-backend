@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 export const Organization = objectType({
     name: "Organization",
     definition(t) {
-        t.int("id");
+        t.string("id");
         t.string("name");
         t.string("username");
         t.string("password");
@@ -52,7 +52,7 @@ export const OrganizationMutation = extendType({
                     throw Error("Username or Password incorrect");
                 }
 
-                const token = jwt.sign(org, secret);
+                const token = jwt.sign({ ...org, role: ["ORGANIZATION"] }, secret);
 
                 return token;
             }
@@ -93,7 +93,7 @@ export const OrganizationMutation = extendType({
         t.field("deleteOrganization", {
             type: "Organization",
             args: {
-                id: intArg()
+                id: stringArg()
             },
             async resolve(_root, args, context) {
                 const org = await context.db.organization.delete({

@@ -10,6 +10,7 @@ export const permissions = shield({
         getAllOrganizations: isAdmin,
         getProgrammeById: allow,
         getAllProgrammes: allow,
+        me: allow,
     },
     Mutation: {
         "*": deny,

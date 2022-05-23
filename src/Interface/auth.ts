@@ -1,6 +1,7 @@
 export interface AuthenticatedUser {
-    userId?: number;
+    userId?: string;
     username: string;
     password: string;
+    role: "VOLUNTEER" | "ORGANIZATION" | "ADMIN";
 }
 

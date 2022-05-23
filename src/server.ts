@@ -11,7 +11,7 @@ const server = new ApolloServer({
     schema: applyMiddleware(schema, permissions),
     context: async ({ req }) => {
         try {
-            const token = req.headers.authorization;
+            const token = req?.headers?.authorization;
 
             const auth: any = await AuthService.instance.getAutheticatedUser(token);
             return {

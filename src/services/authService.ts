@@ -28,19 +28,30 @@ export class AuthService {
         //         authprovider: "test-auth"
         //     }
         // }
-
-
-
         if (token == undefined || token == "null") return null;
 
-        let decodedUser: any = this.jwtService.verifyOrganization(token);
+        // tries to verify the token in the backend, if it failes checks if it is from the googleAuth
+        let decodedUser: any;
+
+
+        // Try and verify 
+
+
+        try {
+            decodedUser = this.jwtService.verifyOrganization(token);
+        } catch (err) {
+            decodedUser = this.jwtService.verifyGoogleUser(token);
+        }
+
+        if (!decodedUser) throw new Error("Invalid Token");
 
         const authenticatedUser: AuthenticatedUser = {
-            userId: decodedUser?.id,
-            username: decodedUser?.username,
-            password: decodedUser?.password
-
+            userId: decodedUser.id,
+            username: decodedUser.username,
+            password: decodedUser.password,
+            role: decodedUser.role
         };
+
         return authenticatedUser;
 
     }

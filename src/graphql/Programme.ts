@@ -4,7 +4,7 @@ import { extendType, intArg, objectType, stringArg, floatArg, arg } from "nexus"
 export const Programme = objectType({
     name: "Programme",
     definition(t) {
-        t.int("id");
+        t.string("id");
         t.string("title");
         t.string("description");
         t.int("volunteersRequired");
@@ -12,8 +12,8 @@ export const Programme = objectType({
         t.date("posted");
         t.date("expiry");
         t.date("execution");
-        t.int("locationId");
-        t.int("organizationId");
+        t.string("locationId");
+        t.string("organizationId");
         t.field("organization", {
             type: "Organization",
             async resolve(root, _args, ctx) {
@@ -52,7 +52,7 @@ export const Programme = objectType({
                     }
                 });
 
-                const ids: number[] = applicantsId.map(a => a.id);
+                const ids: string[] = applicantsId.map(a => a.id);
 
                 const applicants: Volunteer[] = await ctx.db.volunteer.findMany({
                     where: {
@@ -74,7 +74,7 @@ export const ProgrammeQuery = extendType({
         t.field("getProgrammeById", {
             type: "Programme",
             args: {
-                id: intArg()
+                id: stringArg()
             },
             async resolve(_root, args, ctx) {
 
