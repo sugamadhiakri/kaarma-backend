@@ -1,48 +1,39 @@
-import { rule } from "graphql-shield";
+import { and, rule } from "graphql-shield";
 import { IRuleResult } from "graphql-shield/dist/types";
 import { Context } from "../Interface/context";
 
+const isAuthorized = (condition: boolean) => {
+    if (condition) {
+        return true;
+    } else {
+        return new Error("Not Authorized");
+    }
+};
 
 export const isAuthenticated = rule()(
     async (_, __, ctx: Context): Promise<IRuleResult> => {
-        const username = ctx.auth.username;
-        return !!username;
-    }
-);
-
-export const isVolunteer = rule()(
-    async (_, __, ctx: Context): Promise<IRuleResult> => {
         const userId = ctx.auth.userId;
-
-        const user = await ctx.db.volunteer.findUnique({
-            where: {
-                id: userId
-            }
-        });
-
-        return !!user;
+        return isAuthorized(!!userId);
     }
 );
 
-export const isOrganization = rule()(
-    async (_, __, ctx: Context): Promise<IRuleResult> => {
-        const userId = ctx.auth.userId;
-
-        const org = await ctx.db.organization.findUnique({
-            where: {
-                id: userId
-            }
-        });
-
-        return !!org && org.username == ctx.auth.username && org.password == ctx.auth.password;
-    }
+export const isVolunteer = and(
+    isAuthenticated,
+    rule()(async (_, __, ctx: Context): Promise<IRuleResult> => {
+        return isAuthorized(ctx.auth.role.includes("VOLUNTEER"));
+    })
 );
 
-export const isAdmin = rule()(
-    async (_, __, ctx: Context): Promise<IRuleResult> => {
-        const username = process.env.ADMIN_USERNAME;
-        const password = process.env.ADMIN_PASSWORD;
+export const isOrganization = and(
+    isAuthenticated,
+    rule()(async (_, __, ctx: Context): Promise<IRuleResult> => {
+        return isAuthorized(ctx.auth.role.includes("ORGANIZATION"));
+    })
+);
 
-        return ctx.auth.username == username && ctx.auth.password == password;
-    }
+export const isAdmin = and(
+    isAuthenticated,
+    rule()(async (_, __, ctx: Context): Promise<IRuleResult> => {
+        return isAuthorized(ctx.auth.role.includes("ADMIN"));
+    })
 );

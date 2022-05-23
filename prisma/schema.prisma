@@ -11,7 +11,7 @@ generator client {
 }
 
 model Organization {
-  id          Int         @id @default(autoincrement())
+  id          String      @id @default(cuid())
   name        String
   username    String
   password    String
@@ -23,7 +23,7 @@ model Organization {
 }
 
 model OrganizationSubmission {
-  id          Int     @id @default(autoincrement())
+  id          String  @id @default(cuid())
   name        String
   description String
   address     String
@@ -33,7 +33,7 @@ model OrganizationSubmission {
 }
 
 model Location {
-  id        Int         @id @default(autoincrement())
+  id        String      @id @default(cuid())
   latitude  Float
   longitude Float
   Volunteer Volunteer[]
@@ -41,7 +41,7 @@ model Location {
 }
 
 model Volunteer {
-  id               Int                     @id @default(autoincrement())
+  id               String                  @id @default(cuid())
   fname            String
   lname            String
   username         String                  @unique
@@ -51,31 +51,31 @@ model Volunteer {
   bloodAvaibality  Boolean                 @default(false)
   lastBloodDonated DateTime
   experience       Int
-  locationId       Int?
+  locationId       String?
   location         Location?               @relation(fields: [locationId], references: [id])
   programmes       VolunteersOnProgramme[]
 }
 
 model Programme {
-  id                  Int                     @id @default(autoincrement())
+  id                  String                  @id @default(cuid())
   title               String
   description         String
   volunteersRequired  Int
   experience          Int
-  organizationId      Int
+  organizationId      String
   posted              DateTime
   expiry              DateTime
   execution           DateTime
-  locationId          Int
+  locationId          String
   organization        Organization            @relation(fields: [organizationId], references: [id])
   location            Location                @relation(fields: [locationId], references: [id])
   ProgrammeApplicants VolunteersOnProgramme[]
 }
 
 model VolunteersOnProgramme {
-  id          Int       @id @default(autoincrement())
-  programmeId Int
-  volunteerId Int
+  id          String    @id @default(cuid())
+  programmeId String
+  volunteerId String
   selected    Boolean   @default(false)
   programme   Programme @relation(fields: [programmeId], references: [id])
   volunteer   Volunteer @relation(fields: [volunteerId], references: [id])

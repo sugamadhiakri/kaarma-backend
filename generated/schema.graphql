@@ -13,16 +13,16 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 scalar DateTime
 
 type Location {
-  id: Int!
+  id: String!
   latitude: Float!
   longitude: Float!
 }
 
 type Mutation {
-  approveOrganization(id: Int!): OrganizationSubmission!
+  approveOrganization(id: String!): OrganizationSubmission!
   createOrganization(address: String!, description: String!, email: String!, name: String!, password: String!, phone: String!, username: String!): Organization!
   createProgramme(description: String!, execution: String!, experience: Int!, expiry: String!, latitude: Float!, longitude: Float!, title: String!, volunteersRequired: Int!): Programme!
-  deleteOrganization(id: Int!): Organization!
+  deleteOrganization(id: String!): Organization!
   loginAdmin(password: String!, username: String!): String!
   loginOrganization(password: String!, username: String!): String!
   submmitOrganization(address: String!, description: String!, email: String!, name: String!, phone: String!): OrganizationSubmission!
@@ -32,7 +32,7 @@ type Organization {
   address: String!
   description: String!
   email: String!
-  id: Int!
+  id: String!
   name: String!
   password: String!
   phone: String!
@@ -44,7 +44,7 @@ type OrganizationSubmission {
   address: String!
   description: String!
   email: String!
-  id: Int!
+  id: String!
   name: String!
   phone: String!
 }
@@ -55,11 +55,11 @@ type Programme {
   execution: DateTime!
   experience: Int!
   expiry: DateTime!
-  id: Int!
+  id: String!
   location: Location
-  locationId: Int!
+  locationId: String!
   organization: Organization!
-  organizationId: Int!
+  organizationId: String!
   posted: DateTime!
   title: String!
   volunteersRequired: Int!
@@ -70,13 +70,14 @@ type Query {
   getAllPendingSubmittedOrganizations: [OrganizationSubmission!]!
   getAllProgrammes: [Programme!]!
   getAllSubmittedOrganizations: [OrganizationSubmission!]!
-  getProgrammeById(id: Int!): Programme!
-  getSubmittedOrganizationById(id: Int!): OrganizationSubmission
+  getProgrammeById(id: String!): Programme!
+  getSubmittedOrganizationById(id: String!): OrganizationSubmission
+  getVolunteerById(id: String!): Volunteer!
   me: User!
 }
 
 type User {
-  id: Int
+  id: String
   role: UserRole!
   username: String!
 }
@@ -93,11 +94,11 @@ type Volunteer {
   email: String!
   experience: Int!
   fname: String!
-  id: Int!
+  id: String!
   lastBloodDonated: DateTime
   lname: String!
   location: Location
-  locationId: Int
+  locationId: String
   phone: String!
   username: String!
 }

@@ -1,5 +1,4 @@
 import { enumType, extendType, objectType } from "nexus";
-import { isAdmin, isOrganization, isVolunteer } from "../authorization/rules";
 
 
 export const UserRolesEnum = enumType({
@@ -15,7 +14,7 @@ export const UserRolesEnum = enumType({
 export const User = objectType({
     name: "User",
     definition(t) {
-        t.nullable.int("id");
+        t.nullable.string("id");
         t.string("username");
         t.field("role", {
             type: UserRolesEnum

@@ -1,9 +1,9 @@
-import { extendType, intArg, objectType } from "nexus";
+import { extendType, intArg, objectType, stringArg } from "nexus";
 
 export const Volunteer = objectType({
     name: "Volunteer",
     definition(t) {
-        t.int("id");
+        t.string("id");
         t.string("fname");
         t.string("lname");
         t.string("username");
@@ -13,7 +13,7 @@ export const Volunteer = objectType({
         t.boolean("bloodAvaibality");
         t.nullable.date("lastBloodDonated");
         t.int("experience");
-        t.nullable.int("locationId");
+        t.nullable.string("locationId");
         t.nullable.field("location", {
             type: "Location",
             async resolve(root, _args, ctx) {
@@ -35,7 +35,7 @@ export const VolunteerQuery = extendType({
         t.field("getVolunteerById", {
             type: "Volunteer",
             args: {
-                id: intArg()
+                id: stringArg()
             },
             async resolve(_root, args, ctx) {
                 const volunteer = ctx.db.volunteer.findUnique({

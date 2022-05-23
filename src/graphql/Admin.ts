@@ -30,7 +30,7 @@ export const AdminMutation = extendType({
                 const secret = process.env.JWT_SECRET || '';
 
                 const admin = {
-                    username: args.username, password: args.password, role: "ADMIN"
+                    username: args.username, password: args.password, role: ["ADMIN"]
                 };
 
                 const token = jwt.sign(admin, secret);

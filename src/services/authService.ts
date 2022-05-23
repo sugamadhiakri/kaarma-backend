@@ -28,13 +28,15 @@ export class AuthService {
         //         authprovider: "test-auth"
         //     }
         // }
-
-
-
         if (token == undefined || token == "null") return null;
 
         // tries to verify the token in the backend, if it failes checks if it is from the googleAuth
         let decodedUser: any;
+
+
+        // Try and verify 
+
+
         try {
             decodedUser = this.jwtService.verifyOrganization(token);
         } catch (err) {

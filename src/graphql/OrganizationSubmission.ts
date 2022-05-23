@@ -6,7 +6,7 @@ import { JwtService } from "../services/JwtService";
 export const OrganizationSubmission = objectType({
     name: "OrganizationSubmission",
     definition(t) {
-        t.int("id");
+        t.string("id");
         t.string("name");
         t.string("description");
         t.string("address");
@@ -40,7 +40,7 @@ export const OrganizationSubmissionQuery = extendType({
         t.nullable.field("getSubmittedOrganizationById", {
             type: OrganizationSubmission,
             args: {
-                id: intArg()
+                id: stringArg()
             },
             async resolve(_root, args, context) {
                 return await context.db.organizationSubmission.findUnique({
@@ -88,7 +88,7 @@ export const OrganizationSubmissionMutation = extendType({
         t.field("approveOrganization", {
             type: "OrganizationSubmission",
             args: {
-                id: intArg(),
+                id: stringArg(),
             },
             async resolve(_root, args, context) {
                 // First get the organization details
